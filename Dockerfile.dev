@@ -1,0 +1,57 @@
+# syntax=docker/dockerfile:1
+# check=error=true
+
+# Dev Dockerfile for Hotwire Rails 8 (epitrackr-style)
+# docker build -f Dockerfile.dev -t app-dev .
+# docker compose -f docker-compose.dev.yml up
+
+ARG RUBY_VERSION=4.0.1
+FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+
+WORKDIR /rails
+
+# Base runtime + build deps (your list + Node/Yarn for Hotwire assets)
+RUN apt-get update -qq && \
+  DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+  curl gnupg && \
+  curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+  apt-get install -y nodejs && \
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get update -qq && \
+  apt-get install --no-install-recommends -y \
+  libjemalloc2 \
+  postgresql-client \
+  build-essential \
+  git \
+  libpq-dev \
+  libyaml-dev \
+  pkg-config && \
+  corepack enable yarn && \
+  corepack prepare yarn@stable --activate && \
+  rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+
+# Dev env: full gems, parallel jobs
+ENV RAILS_ENV=development \
+  BUNDLE_PATH=/usr/local/bundle \
+  BUNDLE_WITHOUT="" \
+  BUNDLE_JOBS=4 \
+  RAILS_SERVER_PORT=3000 \
+  NODE_ENV=development
+
+# Copy deps first for cache
+COPY Gemfile Gemfile.lock ./
+RUN bundle config set --local without '' && \
+  bundle install && \
+  bundle clean --force
+
+FROM base AS runtime
+COPY --from=base /usr/local/bundle /usr/local/bundle
+COPY --from=base /rails /rails
+
+RUN groupadd --gid 1000 rails && \
+  useradd --uid 1000 --gid 1000 --create-home --shell /bin/bash rails
+USER rails:rails
+
+EXPOSE 3000
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
