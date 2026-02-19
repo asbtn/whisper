@@ -8,7 +8,9 @@ class SessionsController < ApplicationController
     @sessions = Current.user.sessions.order(created_at: :desc)
   end
 
-  def new; end
+  def new
+    render Views::Sessions::New.new
+  end
 
   def create
     if (user = User.authenticate_by(email: params[:email], password: params[:password]))
