@@ -43,7 +43,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 # Components
-gem "phlex", "~> 2.4"
+gem "phlex-rails", "~> 2.4"
 
 # Generates authentication
 gem "authentication-zero", "~> 4.0"
