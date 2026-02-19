@@ -62,7 +62,7 @@ group :development, :test do
   gem "rubocop-rspec_rails", "~> 2.32", require: false
 
   # Rspec
-  gem "rspec-rails", "~> 8.0.0"
+  gem "rspec-rails", "~> 8.0.3"
 
   # Test data
   gem "factory_bot_rails", "~> 6.5"
