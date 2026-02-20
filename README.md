@@ -1,24 +1,24 @@
-# README
+Whisper is a real‑time chat learning project built with Ruby on Rails and Hotwire.  
+It focuses on exploring real‑time messaging, Turbo Streams, and minimalistic chat UI patterns.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Stack
 
-Things you may want to cover:
+- Ruby on Rails 8  
+- Hotwire (Turbo, Stimulus)  
+- PostgreSQL  
+- Redis (for Action Cable)  
+- Tailwind CSS with Daisy UI
+- RSpec (testing)  
 
-* Ruby version
+## Features (planned & in progress)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- [ ] User authentication (Authentication Zero)  
+- [ ] Real‑time chatrooms using Turbo Streams
+- [ ] Direct messages between users
+- [ ] Typing indicators and read receipts
+- [ ] Online/offline status updates
+- [ ] Message persistence with PostgreSQL
+- [ ] Chatroom creation and management
+- [ ] Responsive, minimal chat UI
+- [ ] Notifications for new messages  
+- [ ] User avatars and profiles  
