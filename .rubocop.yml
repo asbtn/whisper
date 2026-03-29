@@ -63,6 +63,13 @@ Lint/MissingSuper:
   Enabled: true
   Exclude:
     - 'app/services/**/*'
+    - 'app/components/**/*'
+    - 'app/views/**/*.rb'
 
 RSpecRails/InferredSpecType:
   Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+   - 'app/views/**/*.rb'
+   - 'app/components/**/*'
